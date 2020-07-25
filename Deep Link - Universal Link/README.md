@@ -2,8 +2,7 @@
 
 Cách áp dụng Deep Link và Universal Link vào React-Native App
 
-
-### Table of Contents
+### Mục lục
 
 - [Deep Link](#deep-link)
   - [iOS](#deep-link-ios)
@@ -11,16 +10,26 @@ Cách áp dụng Deep Link và Universal Link vào React-Native App
   - [Handle](#deep-link-handle)
 - [Universal Link](#universal-link)
   - [Config ở Server](#server-configuration)
-      - [Apple App Site Association File](#apple-json-metadata-file)
-        - [iOS 12 trở về](#ios-12-and-earlier)
-        - [iOS 13](#ios-13-and-later)
-      - [Tạo AASA file trên server](#create-aasa-file)
-      - [Thay đổi Content-Type](#modifying-the-content-type)
+    - [Apple App Site Association File](#apple-json-metadata-file)
+      - [iOS 12 trở về](#ios-12-and-earlier)
+      - [iOS 13](#ios-13-and-later)
+    - [Tạo AASA file trên server](#create-aasa-file)
+    - [Thay đổi Content-Type](#modifying-the-content-type)
+      - [Apache](#apache-configuration)
+      - [Nginx](#nginx-configuration)
+      - [Common Issues](#server-common-issue)
+  - [Config ở Client](#client-configuration)
+    - [Associated Domain](#associated-domain)
+    - [Implement trong AppDelegate](#implement-the-corresponding-appdelegate-methods)
+      - [iOS 9.1 trở về](#ios-9.0-and-earlier)
+      - [iOS 9.1+](#ios-9.0-and-later)
+    - [Client Common Issues](#client-common-issues)
+
 ## <a name="deep-link"></a> Deep Linking
 
 Deep Linking là việc sử dụng một scheme (chuỗi) được định nghĩa sẵn để mở ứng dụng từ trình duyệt hoặc ứng dụng khác.
 
-Một scheme thường có định dạng `scheme://host/param` (``host`` và ``param`` là optional)
+Một scheme thường có định dạng `scheme://host/param` (`host` và `param` là optional)
 
 Ví dụ: `urbox://app/home`
 
@@ -30,15 +39,15 @@ Ví dụ: `urbox://app/home`
 - Chọn Target Gốc
 - Chọn Tab Info
 - Tìm URL Types
-- Điền scheme, ví dụ ``urbox``
+- Điền scheme, ví dụ `urbox`
 
 ![Deep Link IOS 1](../Resources/DeepLinkIOS_1.png)
 
-Sau đó mở ``AppDelegate.m`` và thêm vào phần đầu:
+Sau đó mở `AppDelegate.m` và thêm vào phần đầu:
 
-``#import “React/RCTLinkingManager.h”``
+`#import “React/RCTLinkingManager.h”`
 
-Thêm trước ``@end``:
+Thêm trước `@end`:
 
 ```
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
@@ -52,7 +61,7 @@ sourceApplication:sourceApplication annotation:annotation];
 
 ### <a name="deep-link-ios"></a> Android
 
-- Mở ``android/src/main/AndroidManifest.xml`` và thêm như sau:
+- Mở `android/src/main/AndroidManifest.xml` và thêm như sau:
 
 ```
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -94,7 +103,7 @@ sourceApplication:sourceApplication annotation:annotation];
 
 ### <a name="deep-link-handle"></a> Handle trong React Native
 
-Trong class ``App.js`` thêm:
+Trong class `App.js` thêm:
 
 ```
 componentDidMount() {
@@ -121,7 +130,6 @@ Set up Universal Link trên server
 
 ##### <a name="ios-12-and-earlier"></a> Template của iOS 12 trở về
 
-
 ```
 {
     "applinks": {
@@ -146,12 +154,13 @@ Set up Universal Link trên server
 
 **CHÚ Ý!**
 
-- `"apps":` phải có value là ``[]``.
-- `apple-app-site-association` không có `.json` extension. 
+- `"apps":` phải có value là `[]`.
+- `apple-app-site-association` không có `.json` extension.
 
 ##### <a name="ios-13-and-later"></a> For iOS13 and later
 
-Template này có thể handle các URL tốt hơn, ví dụ có thể exlude các url ``#`` thường thấy trong AngularJS
+Template này có thể handle các URL tốt hơn, ví dụ có thể exlude các url `#` thường thấy trong AngularJS
+
 ```
 {
   "applinks": {
@@ -190,7 +199,7 @@ Template này có thể handle các URL tốt hơn, ví dụ có thể exlude c�
 
 **CHÚ Ý!**
 
-- File `apple-app-site-association` không có `.json` extension. 
+- File `apple-app-site-association` không có `.json` extension.
 
 #### <a name="create-aasa-file"></a> Tạo file "apple-app-association" trên server
 
@@ -199,13 +208,14 @@ Template này có thể handle các URL tốt hơn, ví dụ có thể exlude c�
 ```
 ssh root username@example.com
 ```
-2. Chuyển đến thư mục root của webserver *(Có thể ở thư mục khác trên webserver của bạn)*
+
+2. Chuyển đến thư mục root của webserver _(Có thể ở thư mục khác trên webserver của bạn)_
 
 ```
 cd /var/www/
 ```
 
-3. Tạo file ``apple-app-site-association``
+3. Tạo file `apple-app-site-association`
 
 ```
 sudo nano apple-app-site-association
@@ -219,10 +229,10 @@ sudo nano apple-app-site-association
 
 File apple-app-association-file cần có Content-Type:
 
-| OS | Content-Type             |
-| ------------------ | ------------------------ |
-| iOS9 or later      | `application/json`       |
-| iOS8 or lower      | `application/pkcs7-mime` |
+| OS            | Content-Type             |
+| ------------- | ------------------------ |
+| iOS9 or later | `application/json`       |
+| iOS8 or lower | `application/pkcs7-mime` |
 
 Below you'll find instructions on how to do this for your web server.
 
@@ -257,11 +267,9 @@ server {
 The JSON validation may fail if:
 
 - JSON file invalid
-- Redirects đến một url không phải HTTPS
-	- Tất cả redirects sẽ khiến webscraper bot của Apple không thể parse JSON file
+- Redirects đến một url không phải HTTPS - Tất cả redirects sẽ khiến webscraper bot của Apple không thể parse JSON file
 - The server trả về 400-499 HTTP status code
-- The server trẻ về 500-599 HTTP status code
-	- The Apples webscraper bot assumes that the file is temporarily unavailable and may retry again
+- The server trẻ về 500-599 HTTP status code - The Apples webscraper bot assumes that the file is temporarily unavailable and may retry again
 
 Thông tin thêm: [Supporting Associated Domains in Your App](https://developer.apple.com/documentation/safariservices/supporting_associated_domains_in_your_app) and scroll down to the section "Validate the Apple App Site Association File".
 
@@ -272,6 +280,7 @@ Thông tin thêm: [Supporting Associated Domains in Your App](https://developer.
 1. Mở Xcode và đến `<MyApp>.xcodeproj/<Build target>/Capabilities` và chỉnh Associated Domain thành ON.
 
 ![Associated domains](../Resources/xcode_client_setup1.jpg)
+
 2. Chọn URL mà app sẽ response.
 
 ![Associated domains](../Resources/xcode_client_setup2.jpg)
@@ -279,18 +288,19 @@ Thông tin thêm: [Supporting Associated Domains in Your App](https://developer.
 - Một file tên là `<AppName>.entitlements` sẽ được sinh ra.
 - Cần viết chính xác subdomain.
 
-### <a name="implement-the-corresponding-appdelegate-methods"></a> Implement the corresponding `AppDelegate` methods
+### <a name="implement-the-corresponding-appdelegate-methods"></a> Implement các method trong `AppDelegate`:
 
 #### <a name="ios-9.0-and-earlier"></a>iOS 9.0 về trước
 
-Thêm vào ``AppDelegate.m``
+Thêm vào `AppDelegate.m`
+
 ```
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
 ```
 
 #### <a name="ios-9.1-and-later"></a>iOS 9.1+
 
-- iOS 9.1 trở đi hỗ trợ [Apple's Universal Links](https://developer.apple.com/library/archive/documentation/General/Conceptual/AppSearch/UniversalLinks.html) và handle bằng cách thêm vào ``AppDelegate.m``:
+- iOS 9.1 trở đi hỗ trợ [Apple's Universal Links](https://developer.apple.com/library/archive/documentation/General/Conceptual/AppSearch/UniversalLinks.html) và handle bằng cách thêm vào `AppDelegate.m`:
 
 ```
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *))restorationHandler {
@@ -310,4 +320,4 @@ Các file dưới đây sẽ được thay đổi:
 - `<AppName>.entitlements` file trong project iOS
 - `apple-app-site-association`
 
-Khi Test Deep Link hoặc Universal Link hãy sử dụng app Notes trên iPhone, khi nhấn giữ link sẽ hiện ra ``Mở bằng <App>``
+Khi Test Deep Link hoặc Universal Link hãy sử dụng app Notes trên iPhone, khi nhấn giữ link sẽ hiện ra `Mở bằng <App>`
