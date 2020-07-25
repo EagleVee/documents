@@ -41,7 +41,7 @@ Ví dụ: `urbox://app/home`
 - Tìm URL Types
 - Điền scheme, ví dụ `urbox`
 
-![Deep Link IOS 1](../Resources/DeepLinkIOS_1.png)
+![Deep Link IOS 1](DeepLinkIOS_1.png)
 
 Sau đó mở `AppDelegate.m` và thêm vào phần đầu:
 
@@ -279,11 +279,11 @@ Thông tin thêm: [Supporting Associated Domains in Your App](https://developer.
 
 1. Mở Xcode và đến `<MyApp>.xcodeproj/<Build target>/Capabilities` và chỉnh Associated Domain thành ON.
 
-![Associated domains](../Resources/xcode_client_setup1.jpg)
+![Associated domains](xcode_client_setup1.jpg)
 
 2. Chọn URL mà app sẽ response.
 
-![Associated domains](../Resources/xcode_client_setup2.jpg)
+![Associated domains](xcode_client_setup2.jpg)
 
 - Một file tên là `<AppName>.entitlements` sẽ được sinh ra.
 - Cần viết chính xác subdomain.
