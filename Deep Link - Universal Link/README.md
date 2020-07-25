@@ -120,6 +120,8 @@ handleOpenURL(event) {
 
 ## <a name="universal-link"></a> Universal Link
 
+Một vấn đề của Deep Link trong iOS 13, đó là khi bấm vào một scheme không phải `http` hoặc `https` trên Safari (VD: `urbox://`) và app đón scheme đó chưa được cài đặt trên thiết bị, browser sẽ hiện lỗi ``Không thể mở do đường dẫn không xác định``. Để tránh lỗi này, ta phải đăng ký một đường link với apple, gọi là Universal Link có `https`.
+
 ## <a name="server-configuration"></a> Config ở Server
 
 Set up Universal Link trên server
