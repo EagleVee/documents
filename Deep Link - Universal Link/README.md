@@ -173,21 +173,21 @@ Template này có thể handle các URL tốt hơn, ví dụ có thể exlude c�
                {
                   "#": "no_universal_links",
                   "exclude": true,
-                  "comment": "Matches any URL whose fragment equals no_universal_links and instructs the system not to open it as a universal link"
+                  "comment": "Thông báo không bắt các link bắt đầu bằng #"
                },
                {
                   "/": "/buy/*",
-                  "comment": "Matches any URL whose path starts with /buy/"
+                  "comment": "Bắt các URL bắt đầu với /buy/"
                },
                {
                   "/": "/help/website/*",
                   "exclude": true,
-                  "comment": "Matches any URL whose path starts with /help/website/ and instructs the system not to open it as a universal link"
+                  "comment": "Thông báo không bắt các url bắt đầu bằng /help/website/"
                }
                {
                   "/": "/help/*",
                   "?": { "articleNumber": "????" },
-                  "comment": "Matches any URL whose path starts with /help/ and which has a query item with name 'articleNumber' and a value of exactly 4 characters"
+                  "comment": "Bắt các URL bắt đầu bằng /help/ và có query 'articleNumber' và value có 4 ký tự"
                }
              ]
            }
