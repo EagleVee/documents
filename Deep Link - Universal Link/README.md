@@ -90,7 +90,7 @@ sourceApplication:sourceApplication annotation:annotation];
              <action android:name="android.intent.action.VIEW" />
              <category android:name="android.intent.category.DEFAULT" />
              <category android:name="android.intent.category.BROWSABLE" />
-             <data android:scheme="urbox"
+             <data android:scheme="example"
                 android:host="app"
                 android:pathPrefix="/"
               />
