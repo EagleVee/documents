@@ -120,7 +120,7 @@ handleOpenURL(event) {
 
 ## <a name="universal-link"></a> Universal Link
 
-Một vấn đề của Deep Link trong iOS 13, đó là khi bấm vào một scheme không phải `http` hoặc `https` trên Safari (VD: `urbox://`) và app đón scheme đó chưa được cài đặt trên thiết bị, browser sẽ hiện lỗi ``Không thể mở do đường dẫn không xác định``. Để tránh lỗi này, ta phải đăng ký một đường link với apple, gọi là Universal Link có `https`.
+Một vấn đề của Deep Link trong iOS 13, đó là khi bấm vào một scheme không phải `http` hoặc `https` trên Safari (VD: `urbox://`) và app đón scheme đó chưa được cài đặt trên thiết bị, browser sẽ hiện lỗi `Không thể mở do đường dẫn không xác định`. Để tránh lỗi này, ta phải đăng ký một đường link với apple, gọi là Universal Link có `https`.
 
 ## <a name="server-configuration"></a> Config ở Server
 
@@ -233,10 +233,10 @@ File apple-app-association-file cần có Content-Type:
 
 | OS            | Content-Type             |
 | ------------- | ------------------------ |
-| iOS9 or later | `application/json`       |
-| iOS8 or lower | `application/pkcs7-mime` |
+| iOS9 về sau   | `application/json`       |
+| iOS8 về trước | `application/pkcs7-mime` |
 
-Below you'll find instructions on how to do this for your web server.
+Ở dưới là cách config file AASA trên server
 
 #### <a name="apache-configuration"></a> Apache configuration
 
@@ -266,7 +266,7 @@ server {
 
 ### <a name="server-common-issues"></a> Common issues
 
-The JSON validation may fail if:
+JSON validation fail khi:
 
 - JSON file invalid
 - Redirects đến một url không phải HTTPS - Tất cả redirects sẽ khiến webscraper bot của Apple không thể parse JSON file
