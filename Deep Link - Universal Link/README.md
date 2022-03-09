@@ -63,7 +63,7 @@ sourceApplication:sourceApplication annotation:annotation];
 
 - Mở `android/src/main/AndroidManifest.xml` và thêm như sau:
 
-```
+```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
  package="com.deeplinkexample">
 
@@ -105,7 +105,7 @@ sourceApplication:sourceApplication annotation:annotation];
 
 Trong class `App.js` thêm:
 
-```
+```javascript
 componentDidMount() {
   Linking.addEventListener('url', this.handleOpenURL);
 }
@@ -132,7 +132,7 @@ Set up Universal Link trên server
 
 ##### <a name="ios-12-and-earlier"></a> Template của iOS 12 trở về
 
-```
+```json
 {
     "applinks": {
         "apps": [],
@@ -163,7 +163,7 @@ Set up Universal Link trên server
 
 Template này có thể handle các URL tốt hơn, ví dụ có thể exlude các url `#` thường thấy trong AngularJS
 
-```
+```json
 {
   "applinks": {
       "details": [
@@ -207,19 +207,19 @@ Template này có thể handle các URL tốt hơn, ví dụ có thể exlude c�
 
 1. Login đến web server:
 
-```
+```shell
 ssh root username@example.com
 ```
 
 2. Chuyển đến thư mục root của webserver _(Có thể ở thư mục khác trên webserver của bạn)_
 
-```
+```shell
 cd /var/www/
 ```
 
 3. Tạo file `apple-app-site-association`
 
-```
+```shell
 sudo nano apple-app-site-association
 ```
 
@@ -242,7 +242,7 @@ File apple-app-association-file cần có Content-Type:
 
 - Thay đổi `/etc/apache2/sites-available/default-ssl` (hoặc file tương tự) để có `<Files>` snippet:
 
-```
+```xml
 <Directory /path/to/root/directory/>
 ...
 <Files apple-app-site-association>
@@ -296,7 +296,7 @@ Thông tin thêm: [Supporting Associated Domains in Your App](https://developer.
 
 Thêm vào `AppDelegate.m`
 
-```
+```objective-c
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
 ```
 
@@ -304,7 +304,7 @@ Thêm vào `AppDelegate.m`
 
 - iOS 9.1 trở đi hỗ trợ [Apple's Universal Links](https://developer.apple.com/library/archive/documentation/General/Conceptual/AppSearch/UniversalLinks.html) và handle bằng cách thêm vào `AppDelegate.m`:
 
-```
+```objective-c
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *))restorationHandler {
     NSURL *url = userActivity.webpageURL;
     // handle url
