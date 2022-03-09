@@ -31,7 +31,7 @@ Deep Linking là việc sử dụng một scheme (chuỗi) được định ngh�
 
 Một scheme thường có định dạng `scheme://host/param` (`host` và `param` là optional)
 
-Ví dụ: `urbox://app/home`
+Ví dụ: `myapp://app/home`
 
 ### <a name="deep-link-ios"></a> iOS
 
@@ -39,7 +39,7 @@ Ví dụ: `urbox://app/home`
 - Chọn Target Gốc
 - Chọn Tab Info
 - Tìm URL Types
-- Điền scheme, ví dụ `urbox`
+- Điền scheme, ví dụ `myapp`
 
 ![Deep Link IOS 1](DeepLinkIOS_1.png)
 
@@ -86,15 +86,17 @@ sourceApplication:sourceApplication annotation:annotation];
            <action android:name="android.intent.action.MAIN" />
            <category android:name="android.intent.category.LAUNCHER" />
        </intent-filter>
+       // Add this
         <intent-filter>
              <action android:name="android.intent.action.VIEW" />
              <category android:name="android.intent.category.DEFAULT" />
              <category android:name="android.intent.category.BROWSABLE" />
-             <data android:scheme="example"
+             <data android:scheme="myapp"
                 android:host="app"
                 android:pathPrefix="/"
               />
          </intent-filter>
+       // End
      </activity>
      <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
    </application>
