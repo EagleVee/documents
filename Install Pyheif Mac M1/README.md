@@ -40,7 +40,9 @@ References:
   ```
 - Install `pyheif`:
    ```shell
-  pip install pyheif
+  # brow is a synonym to a x86 brew installation, refer to #1 to see how it was setup.  otherwise use brew instead
+  python -m pip uninstall cffi pyheif pycparser
+  LDFLAGS="-L$(brow --prefix libheif)/lib" CFLAGS="-I$(brow --prefix libheif)/include" pip install pyheif --no-cache-dir
   ```
    
 # Hope you succeed in installing pyheif!
